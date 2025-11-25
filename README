@@ -1,0 +1,20 @@
+
+Here is how it works:
+
+Bootstrapping: The openrdap/rdap library uses pre-defined bootstrap servers
+(such as those maintained by IANA or rdap.net) to determine which is the correct,
+authoritative RIR server for a given query (e.g., an ASN or IP address).
+
+
+Automatic Referrals: When you initiate a query, the client library sends it to a
+bootstrap server. If that server is not the authoritative source, it returns an
+HTTP redirection (e.g., HTTP 301 or 302) pointing to the correct RIR's RDAP server
+(e.g., ARIN, RIPE, etc.).
+
+Library Handles the Redirects: The openrdap/rdap client is designed to follow
+these redirects automatically to the authoritative server and return the final,
+relevant data in a standardized JSON format.
+
+In short, the library handles the complexity of finding the correct registry, so
+your code can simply make a single logical query and receive the result from the
+authoritative source without manual intervention or querying multiple RIRs.
