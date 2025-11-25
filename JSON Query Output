@@ -1,0 +1,465 @@
+// I have printed the full RDAP Autnum JSON for each successful query so you can inspect handle, entities, remarks, etc. What is happening behind the scenes.
+
+go run main.go -v 15170
+RDAP autnum for 15170:
+{
+  "DecodeData": {},
+  "Lang": "",
+  "Conformance": [
+    "nro_rdap_profile_0",
+    "rdap_level_0",
+    "nro_rdap_profile_asn_flat_0"
+  ],
+  "ObjectClassName": "autnum",
+  "Notices": [
+    {
+      "DecodeData": {},
+      "Title": "Terms of Service",
+      "Type": "",
+      "Description": [
+        "By using the ARIN RDAP/Whois service, you are agreeing to the RDAP/Whois Terms of Use"
+      ],
+      "Links": [
+        {
+          "DecodeData": {},
+          "Value": "https://rdap.arin.net/registry/autnum/15170",
+          "Rel": "terms-of-service",
+          "Href": "https://www.arin.net/resources/registry/whois/tou/",
+          "HrefLang": null,
+          "Title": "",
+          "Media": "",
+          "Type": "text/html"
+        }
+      ]
+    },
+    {
+      "DecodeData": {},
+      "Title": "Whois Inaccuracy Reporting",
+      "Type": "",
+      "Description": [
+        "If you see inaccuracies in the results, please visit: "
+      ],
+      "Links": [
+        {
+          "DecodeData": {},
+          "Value": "https://rdap.arin.net/registry/autnum/15170",
+          "Rel": "inaccuracy-report",
+          "Href": "https://www.arin.net/resources/registry/whois/inaccuracy_reporting/",
+          "HrefLang": null,
+          "Title": "",
+          "Media": "",
+          "Type": "text/html"
+        }
+      ]
+    },
+    {
+      "DecodeData": {},
+      "Title": "Copyright Notice",
+      "Type": "",
+      "Description": [
+        "Copyright 1997-2025, American Registry for Internet Numbers, Ltd."
+      ],
+      "Links": null
+    }
+  ],
+  "Handle": "AS15170",
+  "StartAutnum": 15170,
+  "EndAutnum": 15170,
+  "IPVersion": "",
+  "Name": "MATCHNET",
+  "Type": "",
+  "Status": [
+    "active"
+  ],
+  "Country": "",
+  "Entities": [
+    {
+      "DecodeData": {},
+      "Lang": "",
+      "Conformance": null,
+      "ObjectClassName": "entity",
+      "Notices": null,
+      "Handle": "MATCHN",
+      "VCard": {
+        "Properties": [
+          {
+            "Name": "version",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "4.0"
+          },
+          {
+            "Name": "fn",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "Spark Networks Limited"
+          },
+          {
+            "Name": "adr",
+            "Parameters": {
+              "label": [
+                "11150 Santa Monica Blvd. Suite 600\nLos Angeles\nCA\n90025\nUnited States"
+              ]
+            },
+            "Type": "text",
+            "Value": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          },
+          {
+            "Name": "kind",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "org"
+          }
+        ]
+      },
+      "Roles": [
+        "registrant"
+      ],
+      "PublicIDs": null,
+      "Entities": [
+        {
+          "DecodeData": {},
+          "Lang": "",
+          "Conformance": null,
+          "ObjectClassName": "entity",
+          "Notices": null,
+          "Handle": "HOSTM1258-ARIN",
+          "VCard": {
+            "Properties": [
+              {
+                "Name": "version",
+                "Parameters": {},
+                "Type": "text",
+                "Value": "4.0"
+              },
+              {
+                "Name": "adr",
+                "Parameters": {
+                  "label": [
+                    "3731 W SOUTH JORDAN PKWY STE 102-405\nSOUTH JORDAN\nUT\n84009\nUnited States"
+                  ]
+                },
+                "Type": "text",
+                "Value": [
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  ""
+                ]
+              },
+              {
+                "Name": "fn",
+                "Parameters": {},
+                "Type": "text",
+                "Value": "Hostmaster"
+              },
+              {
+                "Name": "org",
+                "Parameters": {},
+                "Type": "text",
+                "Value": "Hostmaster"
+              },
+              {
+                "Name": "kind",
+                "Parameters": {},
+                "Type": "text",
+                "Value": "group"
+              },
+              {
+                "Name": "email",
+                "Parameters": {},
+                "Type": "text",
+                "Value": "se@spark.net"
+              },
+              {
+                "Name": "tel",
+                "Parameters": {
+                  "type": [
+                    "work",
+                    "voice"
+                  ]
+                },
+                "Type": "text",
+                "Value": "+1-415-362-1000"
+              }
+            ]
+          },
+          "Roles": [
+            "abuse",
+            "administrative",
+            "technical"
+          ],
+          "PublicIDs": null,
+          "Entities": null,
+          "Remarks": null,
+          "Links": [
+            {
+              "DecodeData": {},
+              "Value": "https://rdap.arin.net/registry/autnum/15170",
+              "Rel": "self",
+              "Href": "https://rdap.arin.net/registry/entity/HOSTM1258-ARIN",
+              "HrefLang": null,
+              "Title": "",
+              "Media": "",
+              "Type": "application/rdap+json"
+            },
+            {
+              "DecodeData": {},
+              "Value": "https://rdap.arin.net/registry/autnum/15170",
+              "Rel": "alternate",
+              "Href": "https://whois.arin.net/rest/poc/HOSTM1258-ARIN",
+              "HrefLang": null,
+              "Title": "",
+              "Media": "",
+              "Type": "application/xml"
+            }
+          ],
+          "Events": [
+            {
+              "DecodeData": {},
+              "Action": "last changed",
+              "Actor": "",
+              "Date": "2025-08-12T03:43:06-04:00",
+              "Links": null
+            },
+            {
+              "DecodeData": {},
+              "Action": "registration",
+              "Actor": "",
+              "Date": "2008-08-19T17:30:55-04:00",
+              "Links": null
+            }
+          ],
+          "AsEventActor": null,
+          "Status": [
+            "validated"
+          ],
+          "Port43": "whois.arin.net",
+          "Networks": null,
+          "Autnums": null
+        }
+      ],
+      "Remarks": null,
+      "Links": [
+        {
+          "DecodeData": {},
+          "Value": "https://rdap.arin.net/registry/autnum/15170",
+          "Rel": "self",
+          "Href": "https://rdap.arin.net/registry/entity/MATCHN",
+          "HrefLang": null,
+          "Title": "",
+          "Media": "",
+          "Type": "application/rdap+json"
+        },
+        {
+          "DecodeData": {},
+          "Value": "https://rdap.arin.net/registry/autnum/15170",
+          "Rel": "alternate",
+          "Href": "https://whois.arin.net/rest/org/MATCHN",
+          "HrefLang": null,
+          "Title": "",
+          "Media": "",
+          "Type": "application/xml"
+        }
+      ],
+      "Events": [
+        {
+          "DecodeData": {},
+          "Action": "last changed",
+          "Actor": "",
+          "Date": "2013-10-28T21:12:10-04:00",
+          "Links": null
+        },
+        {
+          "DecodeData": {},
+          "Action": "registration",
+          "Actor": "",
+          "Date": "2000-03-30T00:00:00-05:00",
+          "Links": null
+        }
+      ],
+      "AsEventActor": null,
+      "Status": null,
+      "Port43": "whois.arin.net",
+      "Networks": null,
+      "Autnums": null
+    },
+    {
+      "DecodeData": {},
+      "Lang": "",
+      "Conformance": null,
+      "ObjectClassName": "entity",
+      "Notices": null,
+      "Handle": "HOSTM1258-ARIN",
+      "VCard": {
+        "Properties": [
+          {
+            "Name": "version",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "4.0"
+          },
+          {
+            "Name": "adr",
+            "Parameters": {
+              "label": [
+                "3731 W SOUTH JORDAN PKWY STE 102-405\nSOUTH JORDAN\nUT\n84009\nUnited States"
+              ]
+            },
+            "Type": "text",
+            "Value": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          },
+          {
+            "Name": "fn",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "Hostmaster"
+          },
+          {
+            "Name": "org",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "Hostmaster"
+          },
+          {
+            "Name": "kind",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "group"
+          },
+          {
+            "Name": "email",
+            "Parameters": {},
+            "Type": "text",
+            "Value": "se@spark.net"
+          },
+          {
+            "Name": "tel",
+            "Parameters": {
+              "type": [
+                "work",
+                "voice"
+              ]
+            },
+            "Type": "text",
+            "Value": "+1-415-362-1000"
+          }
+        ]
+      },
+      "Roles": [
+        "technical",
+        "noc",
+        "abuse"
+      ],
+      "PublicIDs": null,
+      "Entities": null,
+      "Remarks": null,
+      "Links": [
+        {
+          "DecodeData": {},
+          "Value": "https://rdap.arin.net/registry/autnum/15170",
+          "Rel": "self",
+          "Href": "https://rdap.arin.net/registry/entity/HOSTM1258-ARIN",
+          "HrefLang": null,
+          "Title": "",
+          "Media": "",
+          "Type": "application/rdap+json"
+        },
+        {
+          "DecodeData": {},
+          "Value": "https://rdap.arin.net/registry/autnum/15170",
+          "Rel": "alternate",
+          "Href": "https://whois.arin.net/rest/poc/HOSTM1258-ARIN",
+          "HrefLang": null,
+          "Title": "",
+          "Media": "",
+          "Type": "application/xml"
+        }
+      ],
+      "Events": [
+        {
+          "DecodeData": {},
+          "Action": "last changed",
+          "Actor": "",
+          "Date": "2025-08-12T03:43:06-04:00",
+          "Links": null
+        },
+        {
+          "DecodeData": {},
+          "Action": "registration",
+          "Actor": "",
+          "Date": "2008-08-19T17:30:55-04:00",
+          "Links": null
+        }
+      ],
+      "AsEventActor": null,
+      "Status": [
+        "validated"
+      ],
+      "Port43": "whois.arin.net",
+      "Networks": null,
+      "Autnums": null
+    }
+  ],
+  "Remarks": null,
+  "Links": [
+    {
+      "DecodeData": {},
+      "Value": "https://rdap.arin.net/registry/autnum/15170",
+      "Rel": "self",
+      "Href": "https://rdap.arin.net/registry/autnum/15170",
+      "HrefLang": null,
+      "Title": "",
+      "Media": "",
+      "Type": "application/rdap+json"
+    },
+    {
+      "DecodeData": {},
+      "Value": "https://rdap.arin.net/registry/autnum/15170",
+      "Rel": "alternate",
+      "Href": "https://whois.arin.net/rest/asn/AS15170",
+      "HrefLang": null,
+      "Title": "",
+      "Media": "",
+      "Type": "application/xml"
+    }
+  ],
+  "Port43": "whois.arin.net",
+  "Events": [
+    {
+      "DecodeData": {},
+      "Action": "last changed",
+      "Actor": "",
+      "Date": "2012-02-24T09:44:34-05:00",
+      "Links": null
+    },
+    {
+      "DecodeData": {},
+      "Action": "registration",
+      "Actor": "",
+      "Date": "2000-03-30T00:00:00-05:00",
+      "Links": null
+    }
+  ]
+}
+AS15170: MATCHNET
+ 
