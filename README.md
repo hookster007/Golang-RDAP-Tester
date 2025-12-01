@@ -27,5 +27,21 @@ relevant data in a standardized JSON format.
 ## TLDR
 
 In short, the library handles the complexity of finding the correct registry, so
-your code can simply make a single logical query and receive the result from the
+the code can simply make a single logical query and receive the result from the
 authoritative source without manual intervention or querying multiple RIRs.
+
+## Organization name extraction
+
+Different RIRs populate RDAP VCards a bit differently. This tool now extracts a
+human-friendly organization name using the following priority:
+
+- Description remark from the autnum, if present.
+- Entity VCard for entities with roles registrant or administrative, preferring
+  the vCard "org" (or "organization") value; if missing, it falls back to the
+  vCard "fn" value.
+- Any other entity VCard as above.
+- Otherwise falls back to aut.Name, entity handle, aut.Handle, or any remark line.
+
+Generic contact labels (e.g., Hostmaster, NOC, Abuse) and obvious registry names
+(ARIN, RIPE, APNIC, LACNIC, AFRINIC) are filtered out to avoid returning
+registry/contact names instead of the actual organization name.

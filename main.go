@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
@@ -14,17 +15,21 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Println("usage: go run main.go <ASN> [ASN...]")
+	verbose := flag.Bool("v", false, "verbose: print full RDAP autnum JSON")
+	flag.Parse()
+	args := flag.Args()
+	if len(args) < 1 {
+		fmt.Println("usage: go run main.go [-v] <ASN> [ASN...]")
 		os.Exit(2)
 	}
-	for _, a := range os.Args[1:] {
+
+	for _, a := range args {
 		asn, err := strconv.ParseInt(a, 10, 64)
 		if err != nil {
 			fmt.Printf("%s: invalid ASN: %v\n", a, err)
 			continue
 		}
-		name, err := rdapASNLookup(asn)
+		name, err := rdapASNLookup(asn, *verbose)
 		if err != nil {
 			fmt.Printf("AS%d: error: %v\n", asn, err)
 			continue
@@ -37,14 +42,13 @@ func main() {
 	}
 }
 
-// rdapASNLookup queries RDAP for the given ASN and returns a best-effort name.
-func rdapASNLookup(asn int64) (string, error) {
+func rdapASNLookup(asn int64, verbose bool) (string, error) {
 	if asn <= 0 {
 		return "", fmt.Errorf("invalid ASN: %d", asn)
 	}
 	// skip private ASN range
 	if asn >= 64512 && asn <= 65535 {
-		return "", nil
+		return "Private ASN", nil
 	}
 
 	httpClient := &http.Client{Timeout: 6 * time.Second}
@@ -64,10 +68,15 @@ func rdapASNLookup(asn int64) (string, error) {
 			continue
 		}
 
-		if n := strings.TrimSpace(extractAutnumName(aut)); n != "" {
+		if verbose {
+			if b, err := json.MarshalIndent(aut, "", "  "); err == nil {
+				fmt.Printf("RDAP autnum for %s:\n%s\n", q, string(b))
+			}
+		}
+
+		if n := extractAutnumName(aut); n != "" {
 			return n, nil
 		}
-		// successful response but no name found
 		return "", nil
 	}
 
@@ -77,22 +86,28 @@ func rdapASNLookup(asn int64) (string, error) {
 	return "", nil
 }
 
-// extractAutnumName tries common locations for a usable name.
 func extractAutnumName(aut *rdap.Autnum) string {
 	if aut == nil {
 		return ""
 	}
-	if n := strings.TrimSpace(aut.Name); n != "" {
-		return n
-	}
-	if h := strings.TrimSpace(aut.Handle); h != "" {
-		return h
-	}
-	for _, e := range aut.Entities {
-		if en := nameFromEntity(e); en != "" {
-			return en
+
+	// 1: Look for entity vCard with kind="org" and return its fn (formatted name)
+	for _, entity := range aut.Entities {
+		if name := getOrgNameFromVCard(entity.VCard); name != "" {
+			return name
 		}
 	}
+
+	// 2: Fall back to remarks with title "description"
+	for _, r := range aut.Remarks {
+		if strings.EqualFold(strings.TrimSpace(r.Title), "description") && len(r.Description) > 0 {
+			if d := strings.TrimSpace(r.Description[0]); d != "" {
+				return d
+			}
+		}
+	}
+
+	// 3: Any remark description
 	for _, r := range aut.Remarks {
 		if len(r.Description) > 0 {
 			if d := strings.TrimSpace(r.Description[0]); d != "" {
@@ -100,44 +115,53 @@ func extractAutnumName(aut *rdap.Autnum) string {
 			}
 		}
 	}
+
+	// 4: Last resorts
+	if n := strings.TrimSpace(aut.Name); n != "" {
+		return n
+	}
+	if h := strings.TrimSpace(aut.Handle); h != "" {
+		return h
+	}
+
 	return ""
 }
 
-// nameFromEntity attempts to find a "name" in an entity by marshaling to JSON.
-func nameFromEntity(e rdap.Entity) string {
-	b, err := json.Marshal(e)
-	if err != nil {
+func getOrgNameFromVCard(vcard *rdap.VCard) string {
+	if vcard == nil || len(vcard.Properties) == 0 {
 		return ""
 	}
-	var m map[string]interface{}
-	if err := json.Unmarshal(b, &m); err != nil {
-		return ""
-	}
-	for _, k := range []string{"name", "Name", "handle", "Handle"} {
-		if v, ok := m[k]; ok {
-			if s, ok := v.(string); ok && strings.TrimSpace(s) != "" {
-				return strings.TrimSpace(s)
-			}
-		}
-	}
-	if vc, ok := m["vcardArray"]; ok {
-		if arr, ok := vc.([]interface{}); ok && len(arr) >= 2 {
-			if attrs, ok := arr[1].([]interface{}); ok {
-				for _, a := range attrs {
-					if pair, ok := a.([]interface{}); ok && len(pair) >= 3 {
-						if key, ok := pair[0].(string); ok && strings.EqualFold(key, "fn") {
-							// some implementations put the value at index 3 or 2; try both
-							if val, ok := pair[3].(string); ok && strings.TrimSpace(val) != "" {
-								return strings.TrimSpace(val)
-							}
-							if val, ok := pair[2].(string); ok && strings.TrimSpace(val) != "" {
-								return strings.TrimSpace(val)
-							}
-						}
-					}
+
+	// Check if vCard kind is "org"
+	isOrg := false
+	for _, prop := range vcard.Properties {
+		if strings.EqualFold(prop.Name, "kind") {
+			vals := prop.Values()
+			if len(vals) > 0 {
+				kind := strings.ToLower(strings.TrimSpace(vals[len(vals)-1]))
+				if strings.Contains(kind, "org") {
+					isOrg = true
+					break
 				}
 			}
 		}
 	}
+
+	if !isOrg {
+		return ""
+	}
+
+	// Find fn (formatted name) property
+	for _, prop := range vcard.Properties {
+		if strings.EqualFold(prop.Name, "fn") {
+			vals := prop.Values()
+			for i := len(vals) - 1; i >= 0; i-- {
+				if v := strings.TrimSpace(vals[i]); v != "" {
+					return v
+				}
+			}
+		}
+	}
+
 	return ""
 }
