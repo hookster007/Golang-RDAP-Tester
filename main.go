@@ -171,14 +171,13 @@ func getOrgNameFromVCard(vcard *rdap.VCard) string {
 
 // shortenTo40Chars trims whitespace and limits the string to 40 Unicode characters (runes)
 func shortenTo40Chars(text string) string {
-	text = strings.TrimSpace(text)
-	if text == "" {
-		return text
-	}
-
 	runes := []rune(text)
 	if len(runes) > 40 {
 		return string(runes[:40])
+	}
+	text = strings.TrimSpace(text)
+	if text == "" {
+		return text
 	}
 	return text
 }
